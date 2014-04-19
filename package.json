@@ -2,7 +2,7 @@
   "name": "easy-motion",
   "main": "./lib/easy-motion",
   "version": "1.0.0",
-  "description": "A short description of your package",
+  "description": "MovementSpeed++. Jump to any word in your current view super fast",
   "activationEvents": [
     "easy-motion:start"
   ],
