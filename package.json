@@ -1,9 +1,11 @@
 {
   "name": "easy-motion",
   "main": "./lib/easy-motion",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A short description of your package",
-  "activationEvents": ["easy-motion:start"],
+  "activationEvents": [
+    "easy-motion:start"
+  ],
   "repository": "https://github.com/adrian-budau/easy-motion",
   "bugs": "https://github.com/adrian-budau/easy-motion/issues",
   "license": "MIT",
