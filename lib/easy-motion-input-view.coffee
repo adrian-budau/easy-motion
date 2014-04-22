@@ -1,4 +1,4 @@
-{View, EditorView, Range} = require 'atom'
+{View, EditorView, Range, $} = require 'atom'
 
 _ = require 'underscore-plus'
 CoverView = require './easy-motion-cover-view'
@@ -20,7 +20,12 @@ class EasyMotionInputView extends View
     @editor.find('input').on 'blur', @remove
     @editor.on "core:confirm", @confirm
     @editor.on "core:cancel", @goBack
+    @subscribe $(window), 'resize', _.throttle @resetWords, 50
 
+    @resetWords()
+
+  resetWords: =>
+    do @cover.clearLetterCovers
     @loadWords()
     @groupWords()
 
