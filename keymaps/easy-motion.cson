@@ -9,3 +9,8 @@
 # https://atom.io/docs/latest/advanced/keymaps
 '.editor:not(.mini)':
   'cmd-shift-e': 'easy-motion:start'
+  'cmd-shift-y': 'easy-motion:start-reverse'
+
+'.find-and-replace .find-container .editor':
+  'cmd-shift-e': 'easy-motion:start-contextual'
+  'cmd-shift-y': 'easy-motion:start-contextual-reverse'

@@ -12,15 +12,33 @@ class EasyMotionInputView extends View
       @div class: 'editor-container', outlet: 'editorContainer', =>
       @subview 'editor', new EditorView(mini: true)
 
-  initialize: (@realEditorView) =>
+  initialize: (@realEditorView, @reverseMatch = false, options = {}) =>
     @cover = new CoverView(@realEditorView)
     @cover.appendTo @realEditorView.overlayer
 
+    @realEditorView.addClass "easy-motion-editor"
     @editor.find('input').on 'textInput', @autosubmit
     @editor.find('input').on 'blur', @remove
     @editor.on "core:confirm", @confirm
     @editor.on "core:cancel", @goBack
-    @subscribe $(window), 'resize', _.throttle @resetWords, 50
+    if options.noReloadOnScroll
+      @subscribe @realEditorView.getEditor(),
+        "scroll-top-changed scroll-left-changed",
+        @goBack
+    else
+      @subscribe @realEditorView.getEditor(),
+        "scroll-top-changed scroll-left-changed",
+        _.debounce @resetWords, 50
+
+    if options.noReloadOnResize
+      @subscribe $(window), 'resize', @goBack
+    else
+      @subscribe $(window), 'resize', _.debounce @resetWords, 50
+
+    @editor.on "core:page-up", =>
+      @realEditorView.trigger "core:page-up"
+    @editor.on "core:page-down", =>
+      @realEditorView.trigger "core:page-down"
 
     @resetWords()
 
@@ -42,13 +60,18 @@ class EasyMotionInputView extends View
 
   remove: =>
     @cover.remove()
+    @realEditorView.removeClass "easy-motion-editor"
     super()
 
   confirm: =>
-    @realEditorView.getEditor().setCursorBufferPosition @wordStarts[0].start
+    if not @reverseMatch
+      @realEditorView.getEditor().setCursorBufferPosition @wordStarts[0].start
+    else
+      @realEditorView.getEditor().setCursorBufferPosition @wordStarts[0].end
     @goBack()
 
   goBack: =>
+    @unsubscribe()
     @realEditorView.focus()
     @remove()
 
@@ -84,22 +107,29 @@ class EasyMotionInputView extends View
       return
 
     # try different cases for alphabet letters
-    if character != character.toLowerCase
-      character = character.toLowerCase
-    else if character != character.toUpperCase
-      character != character.toUpperCase
+    if character != character.toLowerCase()
+      character = character.toLowerCase()
+    else if character != character.toUpperCase()
+      character = character.toUpperCase()
     else
       return
     if character of @groupedWordStarts and @groupedWordStarts[character].length
       @wordStarts = @groupedWordStarts[character]
+
   loadWords: =>
     words = []
     buffer = @realEditorView.getEditor().getBuffer()
 
     wordStarts = []
     markBeginning = (obj) =>
-      beginWord = obj.range.start
-      beginWordEnd = [beginWord.row, beginWord.column + 1]
+      [beginWord, beginWordEnd] = [null, null]
+      if not @reverseMatch
+        beginWord = obj.range.start
+        beginWordEnd = [beginWord.row, beginWord.column + 1]
+      else
+        beginWordEnd = obj.range.end
+        beginWord = [beginWordEnd.row, beginWordEnd.column - 1]
+
       wordStarts.push new Range(beginWord, beginWordEnd)
 
     for rowRange in @getRowRanges()
