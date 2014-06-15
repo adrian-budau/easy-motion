@@ -14,7 +14,7 @@ class EasyMotionInputView extends View
 
   initialize: (@realEditorView, @reverseMatch = false, options = {}) =>
     @cover = new CoverView(@realEditorView)
-    @cover.appendTo @realEditorView.overlayer
+    @cover.appendTo @realEditorView.underlayer
 
     @realEditorView.addClass "easy-motion-editor"
     @editor.find('input').on 'textInput', @autosubmit
