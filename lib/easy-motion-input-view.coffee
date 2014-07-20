@@ -98,10 +98,11 @@ class EasyMotionInputView extends View
         replacement = if single
           replaceCharacters[i]
         else
-          remains = take % replaceCharacters.length
-          idx = if take < replaceCharacters.length
+          nChar = replaceCharacters.length
+          remains = take % nChar
+          idx = if take <= nChar
             s % take
-          else if s > remains * 2
+          else if take < 2 * nChar and s >= remains * 2
             s - remains
           else
             -1
