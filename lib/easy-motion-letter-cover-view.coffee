@@ -12,7 +12,7 @@ class LetterCoverView extends View
     @text(letter)
     {top, left} = editorView.pixelPositionForBufferPosition range.start
 
-    width = editorView.pixelPositionForBufferPosition(range.end).left -
+    width = editorView.pixelPositionForBufferPosition(range.end).right -
       left
 
     css =

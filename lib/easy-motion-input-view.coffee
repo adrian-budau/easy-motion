@@ -93,10 +93,22 @@ class EasyMotionInputView extends View
         take += 1
 
       @groupedWordStarts[replaceCharacters[i]] = []
-      for wordStart in @wordStarts[last ... (last + take)]
+      for wordStart, s in @wordStarts[last ... (last + take)]
+        single = take is 1
+        replacement = if single
+          replaceCharacters[i]
+        else
+          remains = take % replaceCharacters.length
+          idx = if take < replaceCharacters.length
+            s % take
+          else if s > remains * 2
+            s - remains
+          else
+            -1
+          replaceCharacters[i] + (replaceCharacters[idx] || '•')
         @groupedWordStarts[replaceCharacters[i]].push wordStart
-        @cover.addLetterCover wordStart, replaceCharacters[i],
-          single: take is 1
+        @cover.addLetterCover wordStart, replacement,
+          single: single
 
       last += take
 
