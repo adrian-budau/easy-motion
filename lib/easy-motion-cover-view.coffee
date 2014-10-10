@@ -13,7 +13,7 @@ class CoverView extends View
 
   addLetterCover: (range, letter, options) =>
     letterCover = new LetterCoverView(@realEditorView, range, letter)
-    @append letterCover.element
+    @append letterCover.elem
     @letterCovers.push letterCover
 
     if options.single

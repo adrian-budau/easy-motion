@@ -5,7 +5,7 @@ class LetterCoverView extends View
   @content: ->
     @div class: 'letter-cover', =>
 
-  element: =>
+  elem: =>
     @get()
 
   initialize: (editorView, range, letter) =>

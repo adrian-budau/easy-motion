@@ -5,8 +5,10 @@ EasyMotionFindAndReplaceInputView = require './easy-motion-find-and-replace-inpu
 class EasyMotion
 
 module.exports =
-  configDefaults:
-    replaceCharacters: "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  config:
+    replaceCharacters:
+      type: 'string'
+      default: "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
   activate: (state) ->
     setUpFindAndReplace = (editorView, reverseMatch = false) ->
