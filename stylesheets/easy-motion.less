@@ -13,7 +13,8 @@
     color: hsl(hue(yellow), 100% - saturation(@syntax-background-color), 60% - lightness(@syntax-background-color) * 0.2);
   }
 
-  background-color: @syntax-background-color;
+  background-color: @syntax-selection-color;
+  z-index: 10;
 }
 
 .easy-motion-input {
