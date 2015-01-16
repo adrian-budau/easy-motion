@@ -7,17 +7,17 @@
 
 # For more detailed documentation see
 # https://atom.io/docs/latest/advanced/keymaps
-'.platform-darwin .editor:not(.mini)':
+'.platform-darwin .atom-text-editor:not(.mini)':
   'cmd-shift-e': 'easy-motion:start'
   'cmd-shift-y': 'easy-motion:start-reverse'
 
-'.platform-darwin .find-and-replace .find-container .editor':
+'.platform-darwin .find-and-replace .find-container .atom-text-editor':
   'cmd-shift-e': 'easy-motion:start-contextual'
   'cmd-shift-y': 'easy-motion:start-contextual-reverse'
 
-'.platform-win32 .editor:not(.mini),.platform-linux .editor:not(.mini)':
+'.platform-win32 .atom-text-editor:not(.mini),.platform-linux .atom-text-editor:not(.mini)':
   'ctrl-shift-e': 'easy-motion:start'
   'ctrl-shift-y': 'easy-motion:start-reverse'
-'.platform-win32 .find-and-replace .find-container .editor, .platform-linux .find-and-replace .find-container .editor':
+'.platform-win32 .find-and-replace .find-container .atom-text-editor, .platform-linux .find-and-replace .find-container .atom-text-editor':
   'ctrl-shift-e': 'easy-motion:start-contextual'
   'ctrl-shift-y': 'easy-motion:start-contextual-reverse'
